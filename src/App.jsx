@@ -6,7 +6,7 @@ const services = [
     title: 'Landing pages',
     description:
       'Paginas pensadas para vender un servicio, captar consultas y convertir visitas en clientes.',
-    highlight: 'Ideal para campañas, lanzamientos y negocios que quieren arrancar rapido.',
+    highlight: 'Ideal para campanas, lanzamientos y negocios que quieren arrancar rapido.',
   },
   {
     title: 'Tiendas online',
@@ -24,7 +24,7 @@ const services = [
     title: 'Sistemas a medida',
     description:
       'Paneles, reservas, gestion interna y herramientas digitales creadas para ahorrar tiempo y ordenar procesos.',
-    highlight: 'Cuando una plantilla no alcanza, diseñamos algo hecho a tu forma de trabajar.',
+    highlight: 'Cuando una plantilla no alcanza, disenamos algo hecho a tu forma de trabajar.',
   },
 ]
 
@@ -82,7 +82,7 @@ const testimonials = [
   },
   {
     quote:
-      'Nos guiaron con textos, estructura y diseño. No fue solo una web, fue ordenar la forma en que mostramos el negocio.',
+      'Nos guiaron con textos, estructura y diseno. No fue solo una web, fue ordenar la forma en que mostramos el negocio.',
     author: 'Lucia Benitez',
     role: 'Centro odontologico',
   },
@@ -90,27 +90,46 @@ const testimonials = [
 
 const steps = [
   'Escuchamos tu negocio y definimos la propuesta que mas vende.',
-  'Diseñamos una experiencia visual que se vea profesional y memorable.',
+  'Disenamos una experiencia visual que se vea profesional y memorable.',
   'Lanzamos la web lista para captar consultas, ventas o reservas.',
 ]
 
+const teamMembers = ['Tiiziano Mina', 'Freire Joaquin', 'Avila Horacio']
+const whatsappNumber = '5493513117202'
+
 function LogoMark() {
   return (
-    <div className="logo" aria-label="Variables Web">
-      <svg viewBox="0 0 180 64" role="img" aria-hidden="true">
-        <rect width="180" height="64" rx="20" fill="#ffffff" />
-        <text x="32" y="44" className="logo-brace">
-          {'{'}
-        </text>
-        <text x="79" y="43" className="logo-v">
-          v
-        </text>
-        <text x="116" y="44" className="logo-brace">
-          {'}'}
-        </text>
-      </svg>
-      <span>Variables Web</span>
-    </div>
+    <a className="logo" href="#top" aria-label="Variables Web">
+      <div className="logo-badge" aria-hidden="true">
+        <svg viewBox="0 0 88 88" role="img">
+          <circle cx="44" cy="44" r="38" fill="#ffffff" />
+          <text x="21" y="54" className="logo-brace">
+            {'{'}
+          </text>
+          <text x="37" y="52" className="logo-v">
+            v
+          </text>
+          <text x="52" y="54" className="logo-brace">
+            {'}'}
+          </text>
+        </svg>
+      </div>
+      <span className="logo-copy">
+        <strong>Variables Web</strong>
+        <small>Diseno web que convierte visitas en clientes</small>
+      </span>
+    </a>
+  )
+}
+
+function WhatsAppIcon() {
+  return (
+    <svg className="whatsapp-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M19.05 4.94A9.77 9.77 0 0 0 12.1 2C6.7 2 2.3 6.4 2.3 11.8c0 1.72.45 3.4 1.3 4.88L2 22l5.47-1.44a9.75 9.75 0 0 0 4.63 1.18h.01c5.4 0 9.8-4.4 9.8-9.8 0-2.62-1.02-5.08-2.86-6.99Zm-6.94 15.14h-.01a8.08 8.08 0 0 1-4.11-1.12l-.29-.17-3.25.86.87-3.17-.19-.33a8.06 8.06 0 0 1-1.23-4.28c0-4.46 3.64-8.1 8.11-8.1 2.16 0 4.18.84 5.71 2.38a8.03 8.03 0 0 1 2.37 5.72c0 4.47-3.64 8.11-8.09 8.11Zm4.45-6.07c-.24-.12-1.41-.7-1.63-.78-.22-.08-.38-.12-.55.12-.16.24-.63.78-.77.94-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.18-.71-.63-1.18-1.4-1.32-1.63-.14-.24-.01-.36.1-.48.11-.11.24-.28.36-.42.12-.14.16-.24.24-.39.08-.16.04-.29-.02-.41-.06-.12-.55-1.33-.75-1.83-.2-.48-.41-.41-.55-.42h-.47c-.16 0-.41.06-.62.29-.21.24-.82.8-.82 1.94 0 1.15.84 2.25.96 2.41.12.16 1.65 2.53 4.01 3.54.56.24 1 .38 1.34.49.56.18 1.06.15 1.46.09.44-.07 1.41-.58 1.61-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"
+      />
+    </svg>
   )
 }
 
@@ -132,42 +151,48 @@ function App() {
 
   const whatsappMessage = encodeURIComponent(
     [
-      'Hola, quiero cotizar una web.',
+      'Hola, vi la web de Variables Web y quiero recibir asesoramiento.',
       `Nombre: ${formData.name || 'No indicado'}`,
       `Negocio: ${formData.business || 'No indicado'}`,
       `Servicio: ${formData.service}`,
-      `Detalle: ${formData.message || 'Quiero mas informacion sobre tiempos y precios.'}`,
+      `Detalle: ${formData.message || 'Quiero informacion sobre tiempos, precios y cual seria la mejor solucion para mi negocio.'}`,
     ].join('\n')
   )
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
 
   return (
-    <div className="page-shell">
+    <div className="page-shell" id="top">
       <header className="topbar">
-        <LogoMark />
+        <div className="topbar-surface">
+          <LogoMark />
 
-        <nav className="nav">
-          <a href="#servicios">Servicios</a>
-          <a href="#proyectos">Proyectos</a>
-          <a href="#nosotros">Nosotros</a>
-          <a href="#contacto">Contacto</a>
-        </nav>
+          <nav className="nav" aria-label="Navegacion principal">
+            <div className="nav-links">
+              <a href="#servicios">Servicios</a>
+              <a href="#proyectos">Proyectos</a>
+              <a href="#nosotros">Nosotros</a>
+              <a href="#contacto">Contacto</a>
+            </div>
+          </nav>
 
-        <a className="nav-cta" href="#contacto">
-          Cotizar mi web
-        </a>
+          <a className="nav-cta" href="#contacto">
+            Cotizar mi web
+          </a>
+        </div>
       </header>
 
       <main>
         <section className="hero-section">
           <div className="hero-copy">
             <div className="eyebrow">
-              Diseno web, tiendas online, sistemas y presencia digital que vende
+              Diseno web, sistemas, automatizacion y presencia digital para negocios
             </div>
-            <h1>Creamos sitios web que atraen mas clientes a tu negocio.</h1>
+            <h1>Creamos webs y sistemas para vender mejor y trabajar mejor.</h1>
             <p className="hero-lead">
-              Diseñamos paginas impactantes, profesionales y listas para convertir
-              visitas en consultas, ventas o reservas. Si tu negocio necesita
-              verse fuerte en internet, lo construimos para eso.
+              Disenamos paginas para captar clientes, pero tambien sistemas web
+              para organizar turnos, pacientes, clientes, ventas y procesos
+              internos. Si hoy trabajas con papel, WhatsApp desordenado o tareas
+              manuales, te ayudamos a llevarlo a digital.
             </p>
 
             <div className="hero-actions">
@@ -176,10 +201,11 @@ function App() {
               </a>
               <a
                 className="secondary-button"
-                href={`https://wa.me/?text=${whatsappMessage}`}
+                href={whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
               >
+                <WhatsAppIcon />
                 Hablar por WhatsApp
               </a>
             </div>
@@ -190,12 +216,12 @@ function App() {
                 <span>Tu propuesta se entiende en segundos.</span>
               </article>
               <article>
-                <strong>Diseno vendedor</strong>
-                <span>Estetica premium con foco total en conversion.</span>
+                <strong>Capta y ordena</strong>
+                <span>Sirve tanto para vender como para gestionar mejor.</span>
               </article>
               <article>
                 <strong>Hecho a medida</strong>
-                <span>Desde una landing hasta sistemas para operar mejor.</span>
+                <span>Desde una landing hasta un sistema para automatizar tareas.</span>
               </article>
             </div>
           </div>
@@ -218,8 +244,8 @@ function App() {
                 </div>
                 <h2>Tu negocio con presencia de alto nivel</h2>
                 <p>
-                  Una web pensada para destacar frente a la competencia y lograr
-                  que mas personas te escriban.
+                  Una solucion digital pensada para atraer clientes o para
+                  ordenar por dentro como funciona tu negocio.
                 </p>
                 <div className="mock-actions">
                   <span className="mock-primary">Quiero resultados</span>
@@ -253,8 +279,9 @@ function App() {
             <span className="section-kicker">Servicios</span>
             <h2>Todo lo que necesita tu negocio para vender mejor online</h2>
             <p>
-              No hacemos paginas por hacer. Diseñamos piezas digitales que
-              generan confianza, explican lo que ofreces y empujan a la accion.
+              No hacemos solo paginas lindas. Creamos herramientas digitales que
+              pueden ayudarte a vender mas, atender mejor y dejar atras procesos
+              manuales.
             </p>
           </div>
 
@@ -276,7 +303,9 @@ function App() {
             <h2>Podemos crear paginas para muchisimos tipos de negocio</h2>
             <p>
               Si vendes un servicio, un producto o necesitas mostrar tu marca con
-              seriedad, podemos construir una web pensada para tu rubro.
+              seriedad, podemos construir una web pensada para tu rubro. Y si
+              ademas necesitas gestion interna, reservas o seguimiento de
+              clientes, tambien podemos desarrollarlo.
             </p>
           </div>
 
@@ -294,7 +323,7 @@ function App() {
             <p>
               Aunque una marca recien empiece, su web puede verse como una marca
               grande. Estos proyectos conceptuales estan armados para demostrar
-              diseño, estrategia y criterio comercial.
+              diseno, estrategia y criterio comercial.
             </p>
           </div>
 
@@ -327,28 +356,37 @@ function App() {
             <p>
               Somos un estudio enfocado en crear presencia digital que se vea
               fuerte, moderna y confiable. Nos gusta tomar negocios reales y
-              convertirlos en marcas que impactan desde la primera pantalla.
+              convertirlos en experiencias digitales que impactan y tambien
+              simplifican el trabajo diario.
             </p>
             <p>
               Trabajamos cada proyecto como si fuera nuestra propia vidriera:
               mensaje claro, imagen impecable y una estructura pensada para
-              vender.
+              vender, automatizar y ordenar procesos.
             </p>
           </div>
 
           <div className="founder-card">
-            <div className="founder-photo">
-              <div className="founder-avatar">
-                <span>{'{'}</span>
-                <b>v</b>
-                <span>{'}'}</span>
-              </div>
+            <div className="team-strip">
+              {teamMembers.map((member) => (
+                <article className="team-member" key={member}>
+                  <div className="team-photo">
+                    <div className="founder-avatar">
+                      <span>{'{'}</span>
+                      <b>v</b>
+                      <span>{'}'}</span>
+                    </div>
+                  </div>
+                  <strong>{member}</strong>
+                </article>
+              ))}
             </div>
             <div className="founder-copy">
               <h3>Tu equipo digital para vender con mas presencia</h3>
               <p>
-                Acompañamos a negocios locales, profesionales y marcas que
-                quieren verse mejor y cobrar mas valor por lo que hacen.
+                Acompanamos a negocios locales, profesionales y marcas que
+                quieren verse mejor, cobrar mas valor por lo que hacen y pasar
+                de procesos manuales a sistemas mas agiles.
               </p>
             </div>
           </div>
@@ -356,7 +394,7 @@ function App() {
 
         <section className="section proof-section">
           <div className="section-heading">
-            <span className="section-kicker">Reseñas</span>
+            <span className="section-kicker">Resenas</span>
             <h2>La confianza se construye mostrando resultados y buenas experiencias</h2>
             <p>
               La mejor pagina no solo se ve bien. Hace que el cliente sienta que
@@ -401,10 +439,11 @@ function App() {
             </p>
             <a
               className="inline-whatsapp"
-              href={`https://wa.me/?text=${whatsappMessage}`}
+              href={whatsappUrl}
               target="_blank"
               rel="noreferrer"
             >
+              <WhatsAppIcon />
               Abrir WhatsApp con mensaje preparado
             </a>
           </div>
@@ -413,7 +452,11 @@ function App() {
             className="contact-form"
             onSubmit={(event) => {
               event.preventDefault()
-              window.open(`https://wa.me/?text=${whatsappMessage}`, '_blank', 'noopener,noreferrer')
+              window.open(
+                whatsappUrl,
+                '_blank',
+                'noopener,noreferrer'
+              )
             }}
           >
             <label>
@@ -466,6 +509,10 @@ function App() {
           </form>
         </section>
       </main>
+
+      <footer className="site-footer">
+        <p>© 2026 Variables Web. Todos los derechos reservados.</p>
+      </footer>
     </div>
   )
 }
