@@ -495,6 +495,14 @@
   padding: 1rem 0 1.4rem;
 }
 
+.brand-strip-track {
+  display: contents;
+}
+
+.brand-strip-track-clone {
+  display: none;
+}
+
 .brand-strip span,
 .industries-cloud span {
   padding: 0.85rem 1.1rem;
@@ -589,9 +597,56 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.carousel-shell {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.carousel-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
+.carousel-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-strong);
+  box-shadow: 0 12px 24px rgba(17, 17, 17, 0.06);
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.carousel-button:hover,
+.carousel-button:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(255, 106, 0, 0.28);
+  box-shadow: 0 16px 28px rgba(17, 17, 17, 0.08);
+}
+
+.carousel-arrow-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.carousel-arrow-icon.is-left {
+  transform: rotate(180deg);
+}
+
 .project-card {
   overflow: hidden;
   border-radius: 1.8rem;
+  min-width: 0;
 }
 
 .project-visual {
@@ -671,8 +726,17 @@
   background:
     radial-gradient(circle at top, rgba(255, 115, 0, 0.2), transparent 40%),
     linear-gradient(180deg, #fff, #fff4eb);
+  overflow: hidden;
   display: grid;
   place-items: center;
+}
+
+.team-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 12rem;
+  object-fit: cover;
+  object-position: center top;
 }
 
 .team-member strong {
@@ -680,23 +744,10 @@
   font-size: 0.98rem;
 }
 
-.founder-avatar {
-  width: 11rem;
-  height: 11rem;
-  border-radius: 2rem;
-  background: #111;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2rem;
-  font-size: 3.4rem;
-  box-shadow: 0 25px 60px rgba(17, 17, 17, 0.24);
-}
-
-.founder-avatar b {
-  color: var(--accent);
-  font-style: italic;
+.team-member span {
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
 }
 
 .site-footer {
@@ -715,6 +766,7 @@
 .testimonial-card {
   padding: 1.5rem;
   border-radius: 1.6rem;
+  min-width: 0;
 }
 
 .testimonial-card strong,
@@ -1036,7 +1088,24 @@
   }
 
   .brand-strip {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.9rem;
+    overflow: hidden;
     padding-bottom: 0;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .brand-strip-track {
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 0.9rem;
+    width: max-content;
+    animation: brand-marquee 16s linear infinite;
+  }
+
+  .brand-strip-track-clone {
+    display: inline-flex;
   }
 
   .section {
@@ -1054,6 +1123,65 @@
     grid-template-columns: 1fr;
   }
 
+  .industries-cloud {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .carousel-actions {
+    justify-content: flex-start;
+    gap: 0.55rem;
+  }
+
+  .portfolio-grid,
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: none;
+    grid-template-rows: none;
+    grid-auto-flow: column;
+    grid-auto-columns: calc(100% - 2.4rem);
+    gap: 0.85rem;
+    align-items: stretch;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 0.2rem 0.45rem 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  .portfolio-grid::-webkit-scrollbar,
+  .testimonials-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .project-card,
+  .testimonial-card {
+    display: flex;
+    flex-direction: column;
+    scroll-snap-align: start;
+    width: 100%;
+    height: 100%;
+  }
+
+  .project-visual {
+    min-height: 11.25rem;
+    padding: 1rem;
+  }
+
+  .project-copy {
+    padding: 1rem;
+  }
+
+  .testimonial-card {
+    padding: 1.15rem;
+  }
+
+  .screen-layout span {
+    height: 2.35rem;
+  }
+
   .team-strip {
     grid-template-columns: 1fr;
   }
@@ -1064,6 +1192,26 @@
 }
 
 @media (max-width: 520px) {
+  .carousel-button {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .portfolio-grid,
+  .testimonials-grid {
+    grid-auto-columns: calc(100% - 1.1rem);
+    gap: 0.7rem;
+  }
+
+  .project-visual {
+    min-height: 10.4rem;
+  }
+
+  .project-copy,
+  .testimonial-card {
+    padding: 0.95rem;
+  }
+
   .logo {
     align-items: flex-start;
   }
@@ -1084,5 +1232,15 @@
   .section-heading,
   .contact-copy {
     gap: 0.85rem;
+  }
+}
+
+@keyframes brand-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-100% - 0.9rem));
   }
 }

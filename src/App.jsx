@@ -1,4 +1,7 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import horacioFoto from './img/horaciofoto.webp'
+import joaquinFoto from './img/joaquinfoto.webp'
+import tizianoFoto from './img/tizianofoto.webp'
 import './App.css'
 
 const services = [
@@ -94,7 +97,31 @@ const steps = [
   'Lanzamos la web lista para captar consultas, ventas o reservas.',
 ]
 
-const teamMembers = ['Tiiziano Mina', 'Freire Joaquin', 'Avila Horacio']
+const brandItems = [
+  'Landing pages',
+  'Tiendas online',
+  'Webs corporativas',
+  'Sistemas a medida',
+  'Reservas y automatizacion',
+]
+
+const teamMembers = [
+  {
+    name: 'Tiiziano Mina',
+    role: 'Desarrollador',
+    image: tizianoFoto,
+  },
+  {
+    name: 'Freire Joaquin',
+    role: 'Analista',
+    image: joaquinFoto,
+  },
+  {
+    name: 'Avila Horacio',
+    role: 'Administrador',
+    image: horacioFoto,
+  },
+]
 
 const countryCodes = [
   { flag: '🇦🇷', label: 'Argentina', code: '+54' },
@@ -159,6 +186,21 @@ function CheckIcon() {
   )
 }
 
+function ArrowIcon({ direction = 'right' }) {
+  return (
+    <svg
+      className={`carousel-arrow-icon ${direction === 'left' ? 'is-left' : ''}`}
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        fill="currentColor"
+        d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41Z"
+      />
+    </svg>
+  )
+}
+
 function App() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
   const [formData, setFormData] = useState({
@@ -175,6 +217,8 @@ function App() {
     message: '',
   })
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const portfolioRef = useRef(null)
+  const testimonialsRef = useRef(null)
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -269,6 +313,12 @@ function App() {
           'No se pudo conectar con el formulario. Intenta nuevamente o escribenos por WhatsApp.',
       })
     }
+  }
+
+  const scrollCarousel = (ref, direction) => {
+    if (!ref.current) return
+    const amount = ref.current.clientWidth * 0.86 * direction
+    ref.current.scrollBy({ left: amount, behavior: 'smooth' })
   }
 
   return (
@@ -437,11 +487,16 @@ function App() {
         </section>
 
         <section className="brand-strip">
-          <span>Landing pages</span>
-          <span>Tiendas online</span>
-          <span>Webs corporativas</span>
-          <span>Sistemas a medida</span>
-          <span>Reservas y automatizacion</span>
+          <div className="brand-strip-track">
+            {brandItems.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+          <div className="brand-strip-track brand-strip-track-clone" aria-hidden="true">
+            {brandItems.map((item) => (
+              <span key={`clone-${item}`}>{item}</span>
+            ))}
+          </div>
         </section>
 
         <section className="section section-grid" id="servicios">
@@ -497,7 +552,25 @@ function App() {
             </p>
           </div>
 
-          <div className="portfolio-grid">
+          <div className="carousel-shell">
+            <div className="carousel-actions" aria-label="Controles de portafolio">
+              <button
+                className="carousel-button"
+                type="button"
+                onClick={() => scrollCarousel(portfolioRef, -1)}
+              >
+                <ArrowIcon direction="left" />
+              </button>
+              <button
+                className="carousel-button"
+                type="button"
+                onClick={() => scrollCarousel(portfolioRef, 1)}
+              >
+                <ArrowIcon direction="right" />
+              </button>
+            </div>
+
+            <div className="portfolio-grid" ref={portfolioRef}>
             {projects.map((project, index) => (
               <article className="project-card" key={project.name}>
                 <div className={`project-visual visual-${index + 1}`}>
@@ -516,6 +589,7 @@ function App() {
                 </div>
               </article>
             ))}
+            </div>
           </div>
         </section>
 
@@ -539,15 +613,12 @@ function App() {
           <div className="founder-card">
             <div className="team-strip">
               {teamMembers.map((member) => (
-                <article className="team-member" key={member}>
+                <article className="team-member" key={member.name}>
                   <div className="team-photo">
-                    <div className="founder-avatar">
-                      <span>{'{'}</span>
-                      <b>v</b>
-                      <span>{'}'}</span>
-                    </div>
+                    <img src={member.image} alt={member.name} />
                   </div>
-                  <strong>{member}</strong>
+                  <strong>{member.name}</strong>
+                  <span>{member.role}</span>
                 </article>
               ))}
             </div>
@@ -572,7 +643,25 @@ function App() {
             </p>
           </div>
 
-          <div className="testimonials-grid">
+          <div className="carousel-shell">
+            <div className="carousel-actions" aria-label="Controles de resenas">
+              <button
+                className="carousel-button"
+                type="button"
+                onClick={() => scrollCarousel(testimonialsRef, -1)}
+              >
+                <ArrowIcon direction="left" />
+              </button>
+              <button
+                className="carousel-button"
+                type="button"
+                onClick={() => scrollCarousel(testimonialsRef, 1)}
+              >
+                <ArrowIcon direction="right" />
+              </button>
+            </div>
+
+            <div className="testimonials-grid" ref={testimonialsRef}>
             {testimonials.map((testimonial) => (
               <article className="testimonial-card" key={testimonial.author}>
                 <p>&quot;{testimonial.quote}&quot;</p>
@@ -580,6 +669,7 @@ function App() {
                 <span>{testimonial.role}</span>
               </article>
             ))}
+            </div>
           </div>
         </section>
 
