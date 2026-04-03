@@ -95,7 +95,22 @@ const steps = [
 ]
 
 const teamMembers = ['Tiiziano Mina', 'Freire Joaquin', 'Avila Horacio']
+
+const countryCodes = [
+  { flag: '🇦🇷', label: 'Argentina', code: '+54' },
+  { flag: '🇨🇱', label: 'Chile', code: '+56' },
+  { flag: '🇺🇾', label: 'Uruguay', code: '+598' },
+  { flag: '🇵🇾', label: 'Paraguay', code: '+595' },
+  { flag: '🇧🇴', label: 'Bolivia', code: '+591' },
+  { flag: '🇵🇪', label: 'Peru', code: '+51' },
+  { flag: '🇧🇷', label: 'Brasil', code: '+55' },
+  { flag: '🇲🇽', label: 'Mexico', code: '+52' },
+  { flag: '🇪🇸', label: 'Espana', code: '+34' },
+  { flag: '🇺🇸', label: 'Estados Unidos', code: '+1' },
+]
+
 const whatsappNumber = '5493513117202'
+const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
 
 function LogoMark() {
   return (
@@ -133,13 +148,33 @@ function WhatsAppIcon() {
   )
 }
 
+function CheckIcon() {
+  return (
+    <svg className="success-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M12 2.5A9.5 9.5 0 1 0 21.5 12 9.51 9.51 0 0 0 12 2.5Zm4.46 7.36-5.08 5.89a1 1 0 0 1-1.47.07L7.38 13.4a1 1 0 1 1 1.44-1.38l1.77 1.85 4.35-5.05a1 1 0 0 1 1.52 1.04Z"
+      />
+    </svg>
+  )
+}
+
 function App() {
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
+    email: '',
     business: '',
     service: 'Landing page',
+    phoneCountry: '+54',
+    phoneNumber: '',
     message: '',
   })
+  const [submitState, setSubmitState] = useState({
+    status: 'idle',
+    message: '',
+  })
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -149,33 +184,168 @@ function App() {
     }))
   }
 
+  const fullPhone = formData.phoneNumber
+    ? `${formData.phoneCountry} ${formData.phoneNumber}`
+    : 'No indicado'
+
   const whatsappMessage = encodeURIComponent(
     [
       'Hola, vi la web de Variables Web y quiero recibir asesoramiento.',
       `Nombre: ${formData.name || 'No indicado'}`,
+      `Email: ${formData.email || 'No indicado'}`,
       `Negocio: ${formData.business || 'No indicado'}`,
+      `Telefono: ${fullPhone}`,
       `Servicio: ${formData.service}`,
       `Detalle: ${formData.message || 'Quiero informacion sobre tiempos, precios y cual seria la mejor solucion para mi negocio.'}`,
     ].join('\n')
   )
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
 
+  const onSubmit = async (event) => {
+    event.preventDefault()
+
+    if (!web3FormsAccessKey) {
+      setSubmitState({
+        status: 'error',
+        message:
+          'Falta configurar la clave de Web3Forms en el archivo .env.',
+      })
+      return
+    }
+
+    setSubmitState({
+      status: 'sending',
+      message: 'Enviando consulta...',
+    })
+
+    const form = event.target
+    const submission = new FormData()
+    submission.append('access_key', web3FormsAccessKey)
+    submission.append('subject', 'Nueva consulta desde Variables Web')
+    submission.append('from_name', 'Variables Web')
+    submission.append('name', formData.name)
+    submission.append('email', formData.email)
+    submission.append('business', formData.business)
+    submission.append('service', formData.service)
+    submission.append('phone', fullPhone)
+    submission.append('message', formData.message)
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: submission,
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        setSubmitState({
+          status: 'success',
+          message:
+            'Consulta enviada con exito. Te responderemos lo antes posible.',
+        })
+        setShowSuccessModal(true)
+        setFormData({
+          name: '',
+          email: '',
+          business: '',
+          service: 'Landing page',
+          phoneCountry: '+54',
+          phoneNumber: '',
+          message: '',
+        })
+        form.reset()
+      } else {
+        setSubmitState({
+          status: 'error',
+          message:
+            'No se pudo enviar el formulario. Intenta nuevamente o escribenos por WhatsApp.',
+        })
+      }
+    } catch {
+      setSubmitState({
+        status: 'error',
+        message:
+          'No se pudo conectar con el formulario. Intenta nuevamente o escribenos por WhatsApp.',
+      })
+    }
+  }
+
   return (
     <div className="page-shell" id="top">
+      {showSuccessModal ? (
+        <div className="success-modal-backdrop" role="presentation">
+          <div
+            className="success-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="success-modal-title"
+          >
+            <div className="success-badge">
+              <CheckIcon />
+            </div>
+            <span className="success-kicker">Consulta enviada</span>
+            <h2 id="success-modal-title">Recibimos tu mensaje correctamente</h2>
+            <p>
+              Gracias por escribirnos. En breve te responderemos para avanzar con
+              tu web o sistema.
+            </p>
+            <button
+              className="primary-button success-close"
+              type="button"
+              onClick={() => setShowSuccessModal(false)}
+            >
+              Perfecto
+            </button>
+          </div>
+        </div>
+      ) : null}
+
       <header className="topbar">
         <div className="topbar-surface">
           <LogoMark />
 
-          <nav className="nav" aria-label="Navegacion principal">
+          <button
+            className={`nav-toggle ${isMobileNavOpen ? 'is-open' : ''}`}
+            type="button"
+            aria-expanded={isMobileNavOpen}
+            aria-controls="primary-navigation"
+            onClick={() => setIsMobileNavOpen((current) => !current)}
+          >
+            <span className="nav-toggle-label">Menu</span>
+            <span className="nav-toggle-bars" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+
+          <nav
+            className={`nav ${isMobileNavOpen ? 'is-open' : ''}`}
+            id="primary-navigation"
+            aria-label="Navegacion principal"
+          >
             <div className="nav-links">
-              <a href="#servicios">Servicios</a>
-              <a href="#proyectos">Proyectos</a>
-              <a href="#nosotros">Nosotros</a>
-              <a href="#contacto">Contacto</a>
+              <a href="#servicios" onClick={() => setIsMobileNavOpen(false)}>
+                Servicios
+              </a>
+              <a href="#proyectos" onClick={() => setIsMobileNavOpen(false)}>
+                Proyectos
+              </a>
+              <a href="#nosotros" onClick={() => setIsMobileNavOpen(false)}>
+                Nosotros
+              </a>
+              <a href="#contacto" onClick={() => setIsMobileNavOpen(false)}>
+                Contacto
+              </a>
             </div>
           </nav>
 
-          <a className="nav-cta" href="#contacto">
+          <a
+            className="nav-cta"
+            href="#contacto"
+            onClick={() => setIsMobileNavOpen(false)}
+          >
             Cotizar mi web
           </a>
         </div>
@@ -434,8 +604,8 @@ function App() {
             <span className="section-kicker">Contacto</span>
             <h2>Contanos que queres vender y te armamos una propuesta</h2>
             <p>
-              Completa este formulario y te llevamos directo a WhatsApp con el
-              mensaje listo. Asi podes cotizar rapido sin vueltas.
+              Completa el formulario para enviarnos tu consulta y, si prefieres
+              una respuesta inmediata, tambien puedes escribirnos por WhatsApp.
             </p>
             <a
               className="inline-whatsapp"
@@ -448,17 +618,7 @@ function App() {
             </a>
           </div>
 
-          <form
-            className="contact-form"
-            onSubmit={(event) => {
-              event.preventDefault()
-              window.open(
-                whatsappUrl,
-                '_blank',
-                'noopener,noreferrer'
-              )
-            }}
-          >
+          <form className="contact-form" onSubmit={onSubmit}>
             <label>
               Nombre
               <input
@@ -467,6 +627,19 @@ function App() {
                 placeholder="Tu nombre"
                 value={formData.name}
                 onChange={handleChange}
+                required
+              />
+            </label>
+
+            <label>
+              Email
+              <input
+                name="email"
+                type="email"
+                placeholder="tunombre@negocio.com"
+                value={formData.email}
+                onChange={handleChange}
+                required
               />
             </label>
 
@@ -478,6 +651,7 @@ function App() {
                 placeholder="Ej: estudio juridico, optica, tienda"
                 value={formData.business}
                 onChange={handleChange}
+                required
               />
             </label>
 
@@ -493,6 +667,34 @@ function App() {
             </label>
 
             <label>
+              Telefono (opcional)
+              <div className="phone-row">
+                <select
+                  className="phone-code"
+                  name="phoneCountry"
+                  value={formData.phoneCountry}
+                  onChange={handleChange}
+                >
+                  {countryCodes.map((country) => (
+                    <option key={`${country.code}-${country.label}`} value={country.code}>
+                      {`${country.flag} ${country.label} (${country.code})`}
+                    </option>
+                  ))}
+                </select>
+
+                <input
+                  className="phone-number"
+                  name="phoneNumber"
+                  type="tel"
+                  inputMode="tel"
+                  placeholder="Numero de telefono"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                />
+              </div>
+            </label>
+
+            <label>
               Mensaje
               <textarea
                 name="message"
@@ -500,18 +702,27 @@ function App() {
                 placeholder="Contanos un poco sobre tu proyecto"
                 value={formData.message}
                 onChange={handleChange}
+                required
               ></textarea>
             </label>
 
-            <button className="primary-button submit-button" type="submit">
-              Agendar llamada / cotizar
+            <button
+              className="primary-button submit-button"
+              type="submit"
+              disabled={submitState.status === 'sending'}
+            >
+              {submitState.status === 'sending' ? 'Enviando...' : 'Enviar consulta'}
             </button>
+
+            <span className={`form-status ${submitState.status}`}>
+              {submitState.message}
+            </span>
           </form>
         </section>
       </main>
 
       <footer className="site-footer">
-        <p>© 2026 Variables Web. Todos los derechos reservados.</p>
+        <p>&copy; 2026 Variables Web. Todos los derechos reservados.</p>
       </footer>
     </div>
   )
