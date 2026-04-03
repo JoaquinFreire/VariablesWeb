@@ -1,7 +1,4 @@
 import { useRef, useState } from 'react'
-import horacioFoto from './img/horaciofoto.webp'
-import joaquinFoto from './img/joaquinfoto.webp'
-import tizianoFoto from './img/tizianofoto.webp'
 import './App.css'
 
 const services = [
@@ -107,19 +104,16 @@ const brandItems = [
 
 const teamMembers = [
   {
-    name: 'Tiiziano Mina',
-    role: 'Desarrollador',
-    image: tizianoFoto,
+    name: 'Mina Tiziano',
+    linkedin: 'https://www.linkedin.com/in/tiziano-mina/',
   },
   {
     name: 'Freire Joaquin',
-    role: 'Analista',
-    image: joaquinFoto,
+    linkedin: 'https://www.linkedin.com/in/joaquin-freire/',
   },
   {
     name: 'Avila Horacio',
-    role: 'Administrador',
-    image: horacioFoto,
+    linkedin: 'https://www.linkedin.com/in/horacio-avila06/',
   },
 ]
 
@@ -196,6 +190,17 @@ function ArrowIcon({ direction = 'right' }) {
       <path
         fill="currentColor"
         d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41Z"
+      />
+    </svg>
+  )
+}
+
+function LinkedInIcon() {
+  return (
+    <svg className="linkedin-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M6.94 8.5H3.56V19h3.38V8.5ZM5.25 3A1.97 1.97 0 1 0 5.3 6.94 1.97 1.97 0 0 0 5.25 3Zm13.19 9.48c0-3.15-1.68-4.61-3.93-4.61a3.4 3.4 0 0 0-3.06 1.69V8.5H8.06c.04.7 0 10.5 0 10.5h3.39v-5.86c0-.31.02-.62.11-.84.24-.62.79-1.26 1.72-1.26 1.22 0 1.7.93 1.7 2.28V19H18.4v-5.52Z"
       />
     </svg>
   )
@@ -595,7 +600,7 @@ function App() {
 
         <section className="section split-section" id="nosotros">
           <div className="about-panel">
-            <span className="section-kicker">Nosotros</span>
+            <span className="section-kicker">Fundadores</span>
             <h2>Hacemos webs con criterio comercial, no solo con buen gusto</h2>
             <p>
               Somos un estudio enfocado en crear presencia digital que se vea
@@ -613,17 +618,23 @@ function App() {
           <div className="founder-card">
             <div className="team-strip">
               {teamMembers.map((member) => (
-                <article className="team-member" key={member.name}>
-                  <div className="team-photo">
-                    <img src={member.image} alt={member.name} />
+                <a
+                  className="team-member"
+                  key={member.name}
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <div className="team-linkedin-badge">
+                    <LinkedInIcon />
                   </div>
                   <strong>{member.name}</strong>
-                  <span>{member.role}</span>
-                </article>
+                  <span>Ver LinkedIn</span>
+                </a>
               ))}
             </div>
             <div className="founder-copy">
-              <h3>Tu equipo digital para vender con mas presencia</h3>
+              <h3>Fundadores de Variables Web</h3>
               <p>
                 Acompanamos a negocios locales, profesionales y marcas que
                 quieren verse mejor, cobrar mas valor por lo que hacen y pasar
