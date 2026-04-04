@@ -1,4 +1,4 @@
-# Variables Web
+# Variable Web
 
 Landing page comercial creada con React + Vite para ofrecer paginas web, tiendas online, webs corporativas y sistemas a medida.
 

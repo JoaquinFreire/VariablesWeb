@@ -1,30 +1,34 @@
-import { useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 const services = [
   {
     title: 'Landing pages',
+    icon: 'rocket',
     description:
-      'Paginas pensadas para vender un servicio, captar consultas y convertir visitas en clientes.',
-    highlight: 'Ideal para campanas, lanzamientos y negocios que quieren arrancar rapido.',
+      'Paginas claras y enfocadas para presentar una propuesta, captar consultas o lanzar una idea con impacto.',
+    highlight: 'Ideal para campanas, lanzamientos y proyectos que necesitan salir rapido y verse profesionales.',
   },
   {
     title: 'Tiendas online',
+    icon: 'store',
     description:
-      'E-commerce con catalogo, carrito, medios de pago y una experiencia de compra pensada para cerrar ventas.',
-    highlight: 'Perfecto para marcas que quieren vender todos los dias sin depender del local.',
+      'E-commerce con catalogo, carrito, pagos y una experiencia simple para vender productos de forma ordenada.',
+    highlight: 'Perfecto para marcas que quieren vender online y tener mejor control de su catalogo.',
   },
   {
     title: 'Webs corporativas',
+    icon: 'layers',
     description:
-      'Sitios profesionales para estudios, consultorios y empresas que necesitan verse serios y generar confianza.',
-    highlight: 'Muy buscadas por abogados, odontologos, constructoras y servicios locales.',
+      'Sitios profesionales para estudios, consultorios, equipos y empresas que necesitan comunicar mejor lo que hacen.',
+    highlight: 'Sirven para transmitir confianza, explicar servicios y mostrar una imagen solida.',
   },
   {
     title: 'Sistemas a medida',
+    icon: 'workflow',
     description:
       'Paneles, reservas, gestion interna y herramientas digitales creadas para ahorrar tiempo y ordenar procesos.',
-    highlight: 'Cuando una plantilla no alcanza, disenamos algo hecho a tu forma de trabajar.',
+    highlight: 'Cuando una plantilla no alcanza, armamos una solucion adaptada a tu forma de trabajar.',
   },
 ]
 
@@ -45,25 +49,40 @@ const industries = [
 
 const projects = [
   {
-    name: 'Optica Prisma',
+    name: 'Dental Sonrisas',
     type: 'Landing premium',
+    image: '/portfolio/landing.webp',
+    alt: 'Landing page para clinica dental con llamado a la accion y reserva de turnos',
     summary:
-      'Una marca ficticia de optica con reservas de turnos, catalogo destacado y una identidad visual elegante.',
-    result: '+58% de consultas simuladas en pruebas de UX',
+      'Landing page de alta conversión diseñada para profesionales de la salud. Enfocada en la captación de pacientes mediante una interfaz limpia, beneficios claros y un sistema de reserva de citas directo.',
+    result: '+60% de efectividad en la conversión de visitantes a consultas reales.',
   },
   {
-    name: 'Estudio Roca & Asociados',
+    name: 'Hábitat Vanguardia – Arquitectura Sustentable',
     type: 'Web corporativa',
+    image: '/portfolio/coorporativa.webp',
+    alt: 'Sitio corporativo de arquitectura con portfolio visual y secciones institucionales',
     summary:
-      'Sitio para abogados con enfoque en confianza, especialidades claras y formularios de contacto de alta conversion.',
-    result: 'Imagen mas seria y profesional desde el primer vistazo',
+      'Sitio institucional diseñado para proyectar solidez y vanguardia. Ideal para empresas que buscan destacar su portafolio de proyectos, servicios especializados y valores corporativos con una estética impecable.',
+    result: 'Posicionamiento de marca profesional que genera confianza inmediata en clientes de alto valor.',
   },
   {
-    name: 'Nativa Shop',
+    name: 'Aroma Ancestral – Café de Especialidad',
     type: 'Tienda online',
+    image: '/portfolio/tienda.webp',
+    alt: 'Tienda online de cafe con catalogo de productos y experiencia de compra mobile',
     summary:
-      'E-commerce conceptual para una marca de indumentaria con fichas limpias, carrito simple y foco en producto.',
-    result: 'Experiencia de compra rapida, moderna y lista para escalar',
+      'E-commerce premium con enfoque en la experiencia sensorial del usuario. Incluye catálogo autogestionable, fichas de producto optimizadas para la venta y un flujo de carrito rápido para reducir el abandono de compra.',
+    result: 'Interfaz ultra-rápida y optimizada para ventas desde cualquier dispositivo móvil.',
+  },
+  {
+    name: 'Ruta Ágil – Gestión Logística',
+    type: 'Sistema a medida',
+    image: '/portfolio/sistema.webp',
+    alt: 'Dashboard logistico con metricas, seguimiento y gestion operativa',
+    summary:
+      'Panel de control (Dashboard) interno para la optimización de operaciones complejas. Permite el seguimiento de flota en tiempo real, monitoreo de métricas críticas y reportes automatizados para la toma de decisiones.',
+    result: 'Reducción del desorden administrativo y control total sobre los procesos internos del equipo.',
   },
 ]
 
@@ -76,7 +95,7 @@ const testimonials = [
   },
   {
     quote:
-      'La pagina quedo hermosa, pero lo mejor fue que pensaron todo para vender. El boton de WhatsApp no para de entrar.',
+      'La pagina quedo hermosa, pero lo mejor fue que pensaron tambien como ordenar consultas y facilitar el contacto. El WhatsApp se mueve mucho mas.',
     author: 'Mariano Sosa',
     role: 'Local de muebles',
   },
@@ -89,9 +108,9 @@ const testimonials = [
 ]
 
 const steps = [
-  'Escuchamos tu negocio y definimos la propuesta que mas vende.',
+  'Escuchamos tu negocio y definimos la solucion que mejor se adapta a tu objetivo.',
   'Disenamos una experiencia visual que se vea profesional y memorable.',
-  'Lanzamos la web lista para captar consultas, ventas o reservas.',
+  'Lanzamos la web o sistema listo para captar consultas, vender, reservar u ordenar procesos.',
 ]
 
 const brandItems = [
@@ -118,26 +137,184 @@ const teamMembers = [
 ]
 
 const countryCodes = [
-  { flag: '🇦🇷', label: 'Argentina', code: '+54' },
-  { flag: '🇨🇱', label: 'Chile', code: '+56' },
-  { flag: '🇺🇾', label: 'Uruguay', code: '+598' },
-  { flag: '🇵🇾', label: 'Paraguay', code: '+595' },
-  { flag: '🇧🇴', label: 'Bolivia', code: '+591' },
-  { flag: '🇵🇪', label: 'Peru', code: '+51' },
-  { flag: '🇧🇷', label: 'Brasil', code: '+55' },
-  { flag: '🇲🇽', label: 'Mexico', code: '+52' },
-  { flag: '🇪🇸', label: 'Espana', code: '+34' },
-  { flag: '🇺🇸', label: 'Estados Unidos', code: '+1' },
+  { flag: '\uD83C\uDDE6\uD83C\uDDF7', label: 'Argentina', code: '+54' },
+  { flag: '\uD83C\uDDE8\uD83C\uDDF1', label: 'Chile', code: '+56' },
+  { flag: '\uD83C\uDDFA\uD83C\uDDFE', label: 'Uruguay', code: '+598' },
+  { flag: '\uD83C\uDDF5\uD83C\uDDFE', label: 'Paraguay', code: '+595' },
+  { flag: '\uD83C\uDDE7\uD83C\uDDF4', label: 'Bolivia', code: '+591' },
+  { flag: '\uD83C\uDDF5\uD83C\uDDEA', label: 'Peru', code: '+51' },
+  { flag: '\uD83C\uDDE7\uD83C\uDDF7', label: 'Brasil', code: '+55' },
+  { flag: '\uD83C\uDDF2\uD83C\uDDFD', label: 'Mexico', code: '+52' },
+  { flag: '\uD83C\uDDEA\uD83C\uDDF8', label: 'Espana', code: '+34' },
+  { flag: '\uD83C\uDDFA\uD83C\uDDF8', label: 'Estados Unidos', code: '+1' },
 ]
 
 const whatsappNumber = '5493513117202'
 const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
+const configuredSiteUrl = import.meta.env.VITE_SITE_URL
+const seoTitle = 'Variable Web | Diseno web, tiendas online y sistemas a medida'
+const seoDescription =
+  'Variable Web crea landing pages, tiendas online, webs corporativas y sistemas a medida para negocios que quieren vender mejor, automatizar procesos y trabajar con mas orden.'
+const seoKeywords =
+  'diseno web, desarrollo web, landing pages, tiendas online, e-commerce, webs corporativas, sistemas a medida, automatizacion, desarrollo de sistemas, paginas web para negocios'
+
+function SEOHead() {
+  useEffect(() => {
+    const origin =
+      configuredSiteUrl ||
+      (typeof window !== 'undefined' ? window.location.origin : 'https://variableweb.com')
+    const canonicalUrl = `${origin}/`
+    const ogImage = `${origin}/favicon.svg`
+
+    document.title = seoTitle
+    document.documentElement.lang = 'es'
+
+    const ensureMeta = (selector, attributes) => {
+      let element = document.head.querySelector(selector)
+      if (!element) {
+        element = document.createElement('meta')
+        document.head.appendChild(element)
+      }
+
+      Object.entries(attributes).forEach(([key, value]) => {
+        element.setAttribute(key, value)
+      })
+    }
+
+    const ensureLink = (selector, attributes) => {
+      let element = document.head.querySelector(selector)
+      if (!element) {
+        element = document.createElement('link')
+        document.head.appendChild(element)
+      }
+
+      Object.entries(attributes).forEach(([key, value]) => {
+        element.setAttribute(key, value)
+      })
+    }
+
+    ensureMeta('meta[name="description"]', {
+      name: 'description',
+      content: seoDescription,
+    })
+    ensureMeta('meta[name="keywords"]', {
+      name: 'keywords',
+      content: seoKeywords,
+    })
+    ensureMeta('meta[name="robots"]', {
+      name: 'robots',
+      content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+    })
+    ensureMeta('meta[name="author"]', {
+      name: 'author',
+      content: 'Variable Web',
+    })
+    ensureMeta('meta[name="theme-color"]', {
+      name: 'theme-color',
+      content: '#ff7a00',
+    })
+    ensureMeta('meta[property="og:type"]', {
+      property: 'og:type',
+      content: 'website',
+    })
+    ensureMeta('meta[property="og:locale"]', {
+      property: 'og:locale',
+      content: 'es_AR',
+    })
+    ensureMeta('meta[property="og:site_name"]', {
+      property: 'og:site_name',
+      content: 'Variable Web',
+    })
+    ensureMeta('meta[property="og:title"]', {
+      property: 'og:title',
+      content: seoTitle,
+    })
+    ensureMeta('meta[property="og:description"]', {
+      property: 'og:description',
+      content: seoDescription,
+    })
+    ensureMeta('meta[property="og:url"]', {
+      property: 'og:url',
+      content: canonicalUrl,
+    })
+    ensureMeta('meta[property="og:image"]', {
+      property: 'og:image',
+      content: ogImage,
+    })
+    ensureMeta('meta[name="twitter:card"]', {
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    })
+    ensureMeta('meta[name="twitter:title"]', {
+      name: 'twitter:title',
+      content: seoTitle,
+    })
+    ensureMeta('meta[name="twitter:description"]', {
+      name: 'twitter:description',
+      content: seoDescription,
+    })
+    ensureMeta('meta[name="twitter:image"]', {
+      name: 'twitter:image',
+      content: ogImage,
+    })
+    ensureLink('link[rel="canonical"]', {
+      rel: 'canonical',
+      href: canonicalUrl,
+    })
+
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      name: 'Variable Web',
+      url: canonicalUrl,
+      image: ogImage,
+      description: seoDescription,
+      areaServed: [
+        'Argentina',
+        'Chile',
+        'Uruguay',
+        'Paraguay',
+        'Bolivia',
+        'Peru',
+        'Brasil',
+        'Mexico',
+        'Espana',
+        'Estados Unidos',
+      ],
+      serviceType: [
+        'Landing pages',
+        'Tiendas online',
+        'Webs corporativas',
+        'Sistemas a medida',
+        'Automatizacion de procesos',
+      ],
+      sameAs: teamMembers.map((member) => member.linkedin),
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'sales',
+        telephone: '+54 9 351 311 7202',
+        availableLanguage: ['Spanish'],
+      },
+    }
+
+    let jsonLd = document.head.querySelector('script[data-seo="local-business"]')
+    if (!jsonLd) {
+      jsonLd = document.createElement('script')
+      jsonLd.type = 'application/ld+json'
+      jsonLd.setAttribute('data-seo', 'local-business')
+      document.head.appendChild(jsonLd)
+    }
+    jsonLd.textContent = JSON.stringify(structuredData)
+  }, [])
+
+  return null
+}
 
 function LogoMark() {
   return (
-    <a className="logo" href="#top" aria-label="Variables Web">
+    <a className="logo" href="#top" aria-label="Variable Web">
       <div className="logo-badge" aria-hidden="true">
-        <svg viewBox="0 0 88 88" role="img">
+        <svg viewBox="0 0 88 88">
           <circle cx="44" cy="44" r="38" fill="#ffffff" />
           <text x="21" y="54" className="logo-brace">
             {'{'}
@@ -151,8 +328,8 @@ function LogoMark() {
         </svg>
       </div>
       <span className="logo-copy">
-        <strong>Variables Web</strong>
-        <small>Diseno web que convierte visitas en clientes</small>
+        <strong>Variable Web</strong>
+        <small>Webs y sistemas para comunicar, vender y organizar mejor</small>
       </span>
     </a>
   )
@@ -206,6 +383,47 @@ function LinkedInIcon() {
   )
 }
 
+function ServiceIcon({ type }) {
+  if (type === 'store') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M4 9.5 5.2 5h13.6L20 9.5v1.1a2.8 2.8 0 0 1-1.5 2.47V19a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1v-5.93A2.8 2.8 0 0 1 4 10.6V9.5Zm2.75 3.86V18h3.9v-3.2a1 1 0 0 1 1-1h.7a1 1 0 0 1 1 1V18h3.9v-4.64a2.75 2.75 0 0 1-2.54-1.2 2.77 2.77 0 0 1-4.42 0 2.75 2.75 0 0 1-4.54 1.2ZM6.74 7l-.56 2.1v1.5a1 1 0 1 0 2 0V9.1L8.66 7H6.74Zm3.97 0-.35 2.18v1.42a1 1 0 1 0 2 0V9.18L12.01 7h-1.3Zm3.6 0-.35 2.18v1.42a1 1 0 1 0 2 0V9.1L15.29 7h-.98Zm2.96 2.1v1.5a1 1 0 1 0 2 0V9.1L18.7 7h-1.92l.49 2.1Z"
+        />
+      </svg>
+    )
+  }
+  if (type === 'layers') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="m12 3 8 4.5-8 4.5-8-4.5L12 3Zm-6.7 7.42L12 14.16l6.7-3.74 1.3.73L12 15.66l-8-4.5 1.3-.74Zm0 3.5L12 17.66l6.7-3.74 1.3.73-8 4.5-8-4.5 1.3-.73Z"
+        />
+      </svg>
+    )
+  }
+  if (type === 'workflow') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M7 4a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm10 0a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM7 14a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm1-7h5a1 1 0 1 1 0 2H8v1.59l1.7 1.7a1 1 0 0 1 .3.7V15a1 1 0 1 1-2 0v-1.59l-1.7-1.7A1 1 0 0 1 6 11V9.82A3 3 0 0 1 4.1 7H3a1 1 0 1 1 0-2h1.1A3 3 0 0 1 8 7Zm8 2a1 1 0 1 1 0-2h.9A3 3 0 0 1 21 5h1a1 1 0 1 1 0 2h-1a3 3 0 0 1-3 3c-.35 0-.7-.06-1-.17V11a1 1 0 0 1-.3.7L15 13.41V15a1 1 0 1 1-2 0v-2.3a1 1 0 0 1 .3-.7l1.7-1.7V9h1Z"
+        />
+      </svg>
+    )
+  }
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M12 2 14.75 8.25 21 11l-6.25 2.75L12 20l-2.75-6.25L3 11l6.25-2.75L12 2Zm0 4.9-.94 2.16L8.9 10l2.16.94L12 13.1l.94-2.16L15.1 10l-2.16-.94L12 6.9Z"
+      />
+    </svg>
+  )
+}
+
 function App() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
   const [formData, setFormData] = useState({
@@ -239,7 +457,7 @@ function App() {
 
   const whatsappMessage = encodeURIComponent(
     [
-      'Hola, vi la web de Variables Web y quiero recibir asesoramiento.',
+      'Hola, vi la web de Variable Web y quiero recibir asesoramiento.',
       `Nombre: ${formData.name || 'No indicado'}`,
       `Email: ${formData.email || 'No indicado'}`,
       `Negocio: ${formData.business || 'No indicado'}`,
@@ -270,8 +488,8 @@ function App() {
     const form = event.target
     const submission = new FormData()
     submission.append('access_key', web3FormsAccessKey)
-    submission.append('subject', 'Nueva consulta desde Variables Web')
-    submission.append('from_name', 'Variables Web')
+    submission.append('subject', 'Nueva consulta desde Variable Web')
+    submission.append('from_name', 'Variable Web')
     submission.append('name', formData.name)
     submission.append('email', formData.email)
     submission.append('business', formData.business)
@@ -328,8 +546,9 @@ function App() {
 
   return (
     <div className="page-shell" id="top">
+      <SEOHead />
       {showSuccessModal ? (
-        <div className="success-modal-backdrop" role="presentation">
+        <div className="success-modal-backdrop">
           <div
             className="success-modal"
             role="dialog"
@@ -343,7 +562,7 @@ function App() {
             <h2 id="success-modal-title">Recibimos tu mensaje correctamente</h2>
             <p>
               Gracias por escribirnos. En breve te responderemos para avanzar con
-              tu web o sistema.
+              tu web, sistema o automatizacion.
             </p>
             <button
               className="primary-button success-close"
@@ -401,7 +620,7 @@ function App() {
             href="#contacto"
             onClick={() => setIsMobileNavOpen(false)}
           >
-            Cotizar mi web
+            Contar mi proyecto
           </a>
         </div>
       </header>
@@ -414,15 +633,16 @@ function App() {
             </div>
             <h1>Creamos webs y sistemas para vender mejor y trabajar mejor.</h1>
             <p className="hero-lead">
-              Disenamos paginas para captar clientes, pero tambien sistemas web
-              para organizar turnos, pacientes, clientes, ventas y procesos
+              Disenamos paginas para captar consultas, presentar mejor tu
+              negocio y dar una imagen profesional, pero tambien sistemas web
+              para organizar turnos, stock, clientes, ventas y procesos
               internos. Si hoy trabajas con papel, WhatsApp desordenado o tareas
               manuales, te ayudamos a llevarlo a digital.
             </p>
 
             <div className="hero-actions">
               <a className="primary-button" href="#contacto">
-                Cotizar mi web
+                Contar mi proyecto
               </a>
               <a
                 className="secondary-button"
@@ -442,7 +662,7 @@ function App() {
               </article>
               <article>
                 <strong>Capta y ordena</strong>
-                <span>Sirve tanto para vender como para gestionar mejor.</span>
+                <span>Sirve para mostrar mejor tu propuesta y gestionar mejor.</span>
               </article>
               <article>
                 <strong>Hecho a medida</strong>
@@ -469,8 +689,8 @@ function App() {
                 </div>
                 <h2>Tu negocio con presencia de alto nivel</h2>
                 <p>
-                  Una solucion digital pensada para atraer clientes o para
-                  ordenar por dentro como funciona tu negocio.
+                  Una solucion digital pensada para comunicar mejor lo que haces
+                  y ordenar como funciona tu negocio.
                 </p>
                 <div className="mock-actions">
                   <span className="mock-primary">Quiero resultados</span>
@@ -507,18 +727,18 @@ function App() {
         <section className="section section-grid" id="servicios">
           <div className="section-heading">
             <span className="section-kicker">Servicios</span>
-            <h2>Todo lo que necesita tu negocio para vender mejor online</h2>
+            <h2>Todo lo que necesita tu negocio para crecer, organizarse y verse mejor online</h2>
             <p>
               No hacemos solo paginas lindas. Creamos herramientas digitales que
-              pueden ayudarte a vender mas, atender mejor y dejar atras procesos
-              manuales.
+              pueden ayudarte a vender mas, atender mejor, automatizar tareas y
+              dejar atras procesos manuales.
             </p>
           </div>
 
           <div className="cards-grid">
             {services.map((service) => (
               <article className="service-card" key={service.title}>
-                <div className="card-icon"></div>
+                <div className="card-icon"><ServiceIcon type={service.icon} /></div>
                 <h3>{service.title}</h3>
                 <p>{service.description}</p>
                 <strong>{service.highlight}</strong>
@@ -532,10 +752,11 @@ function App() {
             <span className="section-kicker">Rubros</span>
             <h2>Podemos crear paginas para muchisimos tipos de negocio</h2>
             <p>
-              Si vendes un servicio, un producto o necesitas mostrar tu marca con
-              seriedad, podemos construir una web pensada para tu rubro. Y si
-              ademas necesitas gestion interna, reservas o seguimiento de
-              clientes, tambien podemos desarrollarlo.
+              Si ofreces un servicio, vendes productos o necesitas mostrar tu
+              marca con seriedad, podemos construir una web pensada para tu
+              rubro. Y si ademas necesitas gestion interna, reservas,
+              automatizaciones o seguimiento de clientes, tambien podemos
+              desarrollarlo.
             </p>
           </div>
 
@@ -562,6 +783,7 @@ function App() {
               <button
                 className="carousel-button"
                 type="button"
+                aria-label="Ver proyecto anterior"
                 onClick={() => scrollCarousel(portfolioRef, -1)}
               >
                 <ArrowIcon direction="left" />
@@ -569,6 +791,7 @@ function App() {
               <button
                 className="carousel-button"
                 type="button"
+                aria-label="Ver proyecto siguiente"
                 onClick={() => scrollCarousel(portfolioRef, 1)}
               >
                 <ArrowIcon direction="right" />
@@ -576,15 +799,10 @@ function App() {
             </div>
 
             <div className="portfolio-grid" ref={portfolioRef}>
-            {projects.map((project, index) => (
+            {projects.map((project) => (
               <article className="project-card" key={project.name}>
-                <div className={`project-visual visual-${index + 1}`}>
-                  <div className="screen-bar"></div>
-                  <div className="screen-layout">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
+                <div className="project-visual">
+                  <img src={project.image} alt={project.alt} loading="lazy" decoding="async" />
                 </div>
                 <div className="project-copy">
                   <span className="project-type">{project.type}</span>
@@ -611,7 +829,7 @@ function App() {
             <p>
               Trabajamos cada proyecto como si fuera nuestra propia vidriera:
               mensaje claro, imagen impecable y una estructura pensada para
-              vender, automatizar y ordenar procesos.
+              comunicar mejor, automatizar y ordenar procesos.
             </p>
           </div>
 
@@ -634,11 +852,11 @@ function App() {
               ))}
             </div>
             <div className="founder-copy">
-              <h3>Fundadores de Variables Web</h3>
+              <h3>Fundadores de Variable Web</h3>
               <p>
                 Acompanamos a negocios locales, profesionales y marcas que
-                quieren verse mejor, cobrar mas valor por lo que hacen y pasar
-                de procesos manuales a sistemas mas agiles.
+                quieren verse mejor, transmitir mas valor por lo que hacen y
+                pasar de procesos manuales a sistemas mas agiles.
               </p>
             </div>
           </div>
@@ -659,6 +877,7 @@ function App() {
               <button
                 className="carousel-button"
                 type="button"
+                aria-label="Ver resena anterior"
                 onClick={() => scrollCarousel(testimonialsRef, -1)}
               >
                 <ArrowIcon direction="left" />
@@ -666,6 +885,7 @@ function App() {
               <button
                 className="carousel-button"
                 type="button"
+                aria-label="Ver resena siguiente"
                 onClick={() => scrollCarousel(testimonialsRef, 1)}
               >
                 <ArrowIcon direction="right" />
@@ -687,7 +907,7 @@ function App() {
         <section className="section process-section">
           <div className="section-heading narrow">
             <span className="section-kicker">Como trabajamos</span>
-            <h2>Un proceso simple para pasar de idea a una web que impresiona</h2>
+            <h2>Un proceso simple para pasar de idea a una solucion digital que funciona</h2>
           </div>
 
           <div className="steps-grid">
@@ -703,7 +923,7 @@ function App() {
         <section className="section contact-section" id="contacto">
           <div className="contact-copy">
             <span className="section-kicker">Contacto</span>
-            <h2>Contanos que queres vender y te armamos una propuesta</h2>
+            <h2>Contanos que necesitas y te armamos una propuesta</h2>
             <p>
               Completa el formulario para enviarnos tu consulta y, si prefieres
               una respuesta inmediata, tambien puedes escribirnos por WhatsApp.
@@ -823,10 +1043,13 @@ function App() {
       </main>
 
       <footer className="site-footer">
-        <p>&copy; 2026 Variables Web. Todos los derechos reservados.</p>
+        <p>&copy; 2026 Variable Web. Todos los derechos reservados.</p>
       </footer>
     </div>
   )
 }
 
 export default App
+
+
+
