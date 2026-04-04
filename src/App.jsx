@@ -586,7 +586,6 @@ function App() {
             aria-controls="primary-navigation"
             onClick={() => setIsMobileNavOpen((current) => !current)}
           >
-            <span className="nav-toggle-label">Menu</span>
             <span className="nav-toggle-bars" aria-hidden="true">
               <span></span>
               <span></span>
@@ -1050,6 +1049,4 @@ function App() {
 }
 
 export default App
-
-
 
