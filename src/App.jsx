@@ -152,11 +152,9 @@ const countryCodes = [
 const whatsappNumber = '5493513117202'
 const web3FormsAccessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
 const configuredSiteUrl = import.meta.env.VITE_SITE_URL
-const seoTitle = 'Variable Web | Diseno web, tiendas online y sistemas a medida'
+const seoTitle = 'Variable Web | Paginas web, tiendas online y sistemas a medida'
 const seoDescription =
-  'Variable Web crea landing pages, tiendas online, webs corporativas y sistemas a medida para negocios que quieren vender mejor, automatizar procesos y trabajar con mas orden.'
-const seoKeywords =
-  'diseno web, desarrollo web, landing pages, tiendas online, e-commerce, webs corporativas, sistemas a medida, automatizacion, desarrollo de sistemas, paginas web para negocios'
+  'Variable Web crea paginas web, tiendas online y sistemas a medida para negocios y profesionales que quieren verse mejor, captar consultas y trabajar con mas orden.'
 
 function SEOHead() {
   useEffect(() => {
@@ -164,7 +162,9 @@ function SEOHead() {
       configuredSiteUrl ||
       (typeof window !== 'undefined' ? window.location.origin : 'https://variableweb.com')
     const canonicalUrl = `${origin}/`
-    const ogImage = `${origin}/favicon.svg`
+    const iconUrl = `${origin}/favicon-512.png`
+    const appleIconUrl = `${origin}/apple-touch-icon.png`
+    const manifestUrl = `${origin}/site.webmanifest`
 
     document.title = seoTitle
     document.documentElement.lang = 'es'
@@ -197,16 +197,16 @@ function SEOHead() {
       name: 'description',
       content: seoDescription,
     })
-    ensureMeta('meta[name="keywords"]', {
-      name: 'keywords',
-      content: seoKeywords,
-    })
     ensureMeta('meta[name="robots"]', {
       name: 'robots',
       content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
     })
     ensureMeta('meta[name="author"]', {
       name: 'author',
+      content: 'Variable Web',
+    })
+    ensureMeta('meta[name="application-name"]', {
+      name: 'application-name',
       content: 'Variable Web',
     })
     ensureMeta('meta[name="theme-color"]', {
@@ -239,7 +239,7 @@ function SEOHead() {
     })
     ensureMeta('meta[property="og:image"]', {
       property: 'og:image',
-      content: ogImage,
+      content: iconUrl,
     })
     ensureMeta('meta[name="twitter:card"]', {
       name: 'twitter:card',
@@ -255,56 +255,114 @@ function SEOHead() {
     })
     ensureMeta('meta[name="twitter:image"]', {
       name: 'twitter:image',
-      content: ogImage,
+      content: iconUrl,
     })
     ensureLink('link[rel="canonical"]', {
       rel: 'canonical',
       href: canonicalUrl,
     })
+    ensureLink('link[rel="icon"][type="image/svg+xml"]', {
+      rel: 'icon',
+      type: 'image/svg+xml',
+      href: '/favicon.svg',
+    })
+    ensureLink('link[rel="icon"][sizes="512x512"]', {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '512x512',
+      href: '/favicon-512.png',
+    })
+    ensureLink('link[rel="apple-touch-icon"]', {
+      rel: 'apple-touch-icon',
+      href: '/apple-touch-icon.png',
+    })
+    ensureLink('link[rel="manifest"]', {
+      rel: 'manifest',
+      href: '/site.webmanifest',
+    })
 
     const structuredData = {
       '@context': 'https://schema.org',
-      '@type': 'ProfessionalService',
-      name: 'Variable Web',
-      url: canonicalUrl,
-      image: ogImage,
-      description: seoDescription,
-      areaServed: [
-        'Argentina',
-        'Chile',
-        'Uruguay',
-        'Paraguay',
-        'Bolivia',
-        'Peru',
-        'Brasil',
-        'Mexico',
-        'Espana',
-        'Estados Unidos',
+      '@graph': [
+        {
+          '@type': 'Organization',
+          '@id': `${canonicalUrl}#organization`,
+          name: 'Variable Web',
+          url: canonicalUrl,
+          logo: iconUrl,
+          image: iconUrl,
+          sameAs: teamMembers.map((member) => member.linkedin),
+          contactPoint: {
+            '@type': 'ContactPoint',
+            contactType: 'sales',
+            telephone: '+54 9 351 311 7202',
+            availableLanguage: ['Spanish'],
+          },
+        },
+        {
+          '@type': 'WebSite',
+          '@id': `${canonicalUrl}#website`,
+          url: canonicalUrl,
+          name: 'Variable Web',
+          description: seoDescription,
+          publisher: {
+            '@id': `${canonicalUrl}#organization`,
+          },
+          inLanguage: 'es',
+        },
+        {
+          '@type': 'ProfessionalService',
+          '@id': `${canonicalUrl}#service`,
+          name: 'Variable Web',
+          url: canonicalUrl,
+          image: iconUrl,
+          description: seoDescription,
+          areaServed: [
+            'Argentina',
+            'Chile',
+            'Uruguay',
+            'Paraguay',
+            'Bolivia',
+            'Peru',
+            'Brasil',
+            'Mexico',
+            'Espana',
+            'Estados Unidos',
+          ],
+          serviceType: [
+            'Paginas web',
+            'Landing pages',
+            'Tiendas online',
+            'Webs corporativas',
+            'Sistemas a medida',
+            'Automatizacion de procesos',
+          ],
+          knowsAbout: [
+            'Paginas web para profesionales',
+            'Paginas web para negocios',
+            'Webs para consultorios y clinicas',
+            'Tiendas online para marcas',
+            'Sistemas web para gestion',
+          ],
+          brand: {
+            '@id': `${canonicalUrl}#organization`,
+          },
+        },
       ],
-      serviceType: [
-        'Landing pages',
-        'Tiendas online',
-        'Webs corporativas',
-        'Sistemas a medida',
-        'Automatizacion de procesos',
-      ],
-      sameAs: teamMembers.map((member) => member.linkedin),
-      contactPoint: {
-        '@type': 'ContactPoint',
-        contactType: 'sales',
-        telephone: '+54 9 351 311 7202',
-        availableLanguage: ['Spanish'],
-      },
     }
 
-    let jsonLd = document.head.querySelector('script[data-seo="local-business"]')
-    if (!jsonLd) {
-      jsonLd = document.createElement('script')
-      jsonLd.type = 'application/ld+json'
-      jsonLd.setAttribute('data-seo', 'local-business')
-      document.head.appendChild(jsonLd)
+    const ensureJsonLd = (key, data) => {
+      let jsonLd = document.head.querySelector(`script[data-seo="${key}"]`)
+      if (!jsonLd) {
+        jsonLd = document.createElement('script')
+        jsonLd.type = 'application/ld+json'
+        jsonLd.setAttribute('data-seo', key)
+        document.head.appendChild(jsonLd)
+      }
+      jsonLd.textContent = JSON.stringify(data)
     }
-    jsonLd.textContent = JSON.stringify(structuredData)
+
+    ensureJsonLd('structured-data', structuredData)
   }, [])
 
   return null
@@ -629,9 +687,9 @@ function App() {
         <section className="hero-section">
           <div className="hero-copy">
             <div className="eyebrow">
-              Diseno web, sistemas, automatizacion y presencia digital para negocios
+              Paginas web, tiendas online y sistemas a medida para negocios y profesionales
             </div>
-            <h1>Creamos webs y sistemas para vender mejor y trabajar mejor.</h1>
+            <h1>Creamos paginas web y sistemas para negocios que necesitan vender y organizarse mejor.</h1>
             <p className="hero-lead">
               Disenamos paginas para captar consultas, presentar mejor tu
               negocio y dar una imagen profesional, pero tambien sistemas web
@@ -750,13 +808,18 @@ function App() {
         <section className="section sectors-section">
           <div className="section-heading narrow">
             <span className="section-kicker">Rubros</span>
-            <h2>Podemos crear paginas para muchisimos tipos de negocio</h2>
+            <h2>Creamos paginas web para rubros concretos, no plantillas genericas</h2>
             <p>
               Si ofreces un servicio, vendes productos o necesitas mostrar tu
               marca con seriedad, podemos construir una web pensada para tu
               rubro. Y si ademas necesitas gestion interna, reservas,
               automatizaciones o seguimiento de clientes, tambien podemos
               desarrollarlo.
+            </p>
+            <p>
+              Algunos ejemplos frecuentes son webs para odontologos, estudios,
+              clinicas, inmobiliarias, tiendas y marcas que necesitan captar
+              consultas, vender o mostrar mejor su propuesta.
             </p>
           </div>
 
