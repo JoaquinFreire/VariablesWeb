@@ -163,8 +163,6 @@ function SEOHead() {
       (typeof window !== 'undefined' ? window.location.origin : 'https://variableweb.com')
     const canonicalUrl = `${origin}/`
     const iconUrl = `${origin}/favicon-512.png`
-    const appleIconUrl = `${origin}/apple-touch-icon.png`
-    const manifestUrl = `${origin}/site.webmanifest`
 
     document.title = seoTitle
     document.documentElement.lang = 'es'
@@ -261,16 +259,15 @@ function SEOHead() {
       rel: 'canonical',
       href: canonicalUrl,
     })
-    ensureLink('link[rel="icon"][type="image/svg+xml"]', {
+    ensureLink('link[rel="icon"][sizes="any"]', {
       rel: 'icon',
+      sizes: 'any',
+      href: '/favicon.ico',
+    })
+    ensureLink('link[rel="alternate icon"][type="image/svg+xml"]', {
+      rel: 'alternate icon',
       type: 'image/svg+xml',
       href: '/favicon.svg',
-    })
-    ensureLink('link[rel="icon"][sizes="512x512"]', {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '512x512',
-      href: '/favicon-512.png',
     })
     ensureLink('link[rel="apple-touch-icon"]', {
       rel: 'apple-touch-icon',
