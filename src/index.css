@@ -4,11 +4,15 @@
   --text: #625954;
   --text-strong: #111111;
   --border: rgba(17, 17, 17, 0.08);
-  --accent: #ff6a00;
+  --accent: #f06603;
   --accent-deep: #db5d00;
   --shadow-soft:
     0 18px 40px rgba(17, 17, 17, 0.07),
     0 2px 10px rgba(17, 17, 17, 0.04);
+  --z-base: 1;
+  --z-topbar: 40;
+  --z-nav-dropdown: 60;
+  --z-modal: 100;
 
   font-family:
     'Segoe UI', 'Trebuchet MS', 'Helvetica Neue', Arial, sans-serif;
@@ -72,6 +76,7 @@ svg {
 #root {
   position: relative;
   z-index: 1;
+  isolation: isolate;
   width: 100%;
   margin: 0;
   padding-bottom: 3rem;
