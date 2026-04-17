@@ -1921,6 +1921,39 @@
   color: var(--text-strong);
 }
 
+.not-found-page {
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 14rem);
+}
+
+.not-found-card {
+  width: min(100%, 52rem);
+  padding: 2rem;
+  border-radius: 2rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 247, 240, 0.96));
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+}
+
+.not-found-card h1 {
+  max-width: 11ch;
+  margin: 0.85rem 0 1rem;
+}
+
+.not-found-card p {
+  max-width: 58ch;
+  line-height: 1.75;
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+}
+
 .linkedin-icon {
   width: 1rem;
   height: 1rem;
@@ -2636,7 +2669,8 @@
   }
 
   .blog-hero-actions,
-  .blog-quicklinks {
+  .blog-quicklinks,
+  .not-found-actions {
     flex-direction: column;
     align-items: stretch;
   }

@@ -101,6 +101,39 @@ function BlogPage({ whatsappUrl }) {
   )
 }
 
+function NotFoundPage() {
+  return (
+    <main>
+      <section className="section not-found-page">
+        <div className="not-found-card">
+          <span className="section-kicker">404</span>
+          <h1>Esta pagina no existe o cambio de lugar.</h1>
+          <p>
+            Puede que la URL este incompleta, que el contenido se haya movido o que
+            el enlace ya no este disponible. Desde aqui puedes volver al inicio o ir
+            directo a las secciones principales.
+          </p>
+
+          <div className="not-found-actions">
+            <a className="primary-button" href="/">
+              Ir al inicio
+            </a>
+            <a className="secondary-button" href="/blog">
+              Ver blog
+            </a>
+            <a className="secondary-button" href="/#servicios">
+              Ver servicios
+            </a>
+            <a className="secondary-button" href="/#contacto">
+              Contactar
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  )
+}
+
 function App() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
   const [currentPath, setCurrentPath] = useState(getCurrentPath)
@@ -112,6 +145,7 @@ function App() {
   }, [])
 
   const isBlogPage = currentPath === '/blog'
+  const isNotFoundPage = currentPath !== '/' && currentPath !== '/blog'
   const whatsappUrl = buildWhatsappUrl()
 
   const toggleNav = () => setIsMobileNavOpen((current) => !current)
@@ -124,6 +158,13 @@ function App() {
           'Guias y estrategias sobre paginas web, SEO local, conversion y sistemas para odontologos, opticas y empresas de servicios.',
         path: '/blog',
       }
+    : isNotFoundPage
+      ? {
+          title: 'Pagina no encontrada | Variable Web',
+          description:
+            'La pagina que intentaste abrir no existe o cambio de lugar. Desde aqui puedes volver al inicio, ver el blog o contactar a Variable Web.',
+          path: currentPath,
+        }
     : {
         title: undefined,
         description: undefined,
@@ -135,7 +176,7 @@ function App() {
       <SEOHead {...seo} />
 
       <Header
-        isBlogPage={isBlogPage}
+        isBlogPage={isBlogPage || isNotFoundPage}
         isMobileNavOpen={isMobileNavOpen}
         onToggleNav={toggleNav}
         onNavClose={closeNav}
@@ -143,6 +184,8 @@ function App() {
 
       {isBlogPage ? (
         <BlogPage whatsappUrl={whatsappUrl} />
+      ) : isNotFoundPage ? (
+        <NotFoundPage />
       ) : (
         <HomePage whatsappUrl={whatsappUrl} />
       )}
