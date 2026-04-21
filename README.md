@@ -139,7 +139,7 @@ Puedes publicar esta landing en cualquier hosting estatico compatible con Vite, 
 
 - Landing comercial funcional
 - Logo y favicon personalizados
-- Diseno claro con color principal naranja
+- Diseño claro con color principal naranja
 - Responsive mejorado
 - Lint y build funcionando
 

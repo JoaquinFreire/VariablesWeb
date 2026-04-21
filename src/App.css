@@ -2921,11 +2921,20 @@
   }
 
   .logo {
-    align-items: flex-start;
+    align-items: center;
   }
 
   .logo-copy {
-    gap: 0.3rem;
+    justify-content: center;
+    gap: 0.12rem;
+  }
+
+  .logo-copy small {
+    display: none;
+  }
+
+  .floating-card {
+    display: none;
   }
 
   .mock-actions {

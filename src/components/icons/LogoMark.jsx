@@ -8,7 +8,7 @@ export function LogoMark({ href = '#top' }) {
       </div>
       <span className="logo-copy">
         <strong>Variable Web</strong>
-        <small>Diseno · Desarrollo · Resultados</small>
+        <small>Diseño · Desarrollo · Resultados</small>
       </span>
     </a>
   )
