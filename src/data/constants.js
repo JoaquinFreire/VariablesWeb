@@ -39,4 +39,4 @@ export const INSTAGRAM_URL = 'https://www.instagram.com/variable_web/'
 
 export const SEO_TITLE = 'Variable Web | Páginas web, tiendas online y sistemas a medida'
 export const SEO_DESCRIPTION =
-  'DiseÃ±amos y desarrollamos pÃ¡ginas web, tiendas online y sistemas a medida para negocios que quieren verse profesionales, captar mÃ¡s clientes y trabajar con orden.'
+  'Diseñamos y desarrollamos páginas web, tiendas online y sistemas a medida para negocios que quieren verse profesionales, captar más clientes y trabajar con orden.'
