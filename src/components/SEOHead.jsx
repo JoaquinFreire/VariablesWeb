@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { teamMembers } from '../data/team'
-import { SEO_DESCRIPTION, SEO_TITLE } from '../data/constants'
+import { INSTAGRAM_URL, SEO_DESCRIPTION, SEO_TITLE } from '../data/constants'
 
 const configuredSiteUrl = import.meta.env.VITE_SITE_URL
 
@@ -70,6 +70,7 @@ export function SEOHead({ title = SEO_TITLE, description = SEO_DESCRIPTION, path
     const organizationId = `${origin}/#organization`
     const websiteId = `${origin}/#website`
     const serviceId = `${origin}/#service`
+    const sameAs = [INSTAGRAM_URL, ...teamMembers.map((member) => member.linkedin)].filter(Boolean)
 
     const structuredData = {
       '@context': 'https://schema.org',
@@ -81,7 +82,7 @@ export function SEOHead({ title = SEO_TITLE, description = SEO_DESCRIPTION, path
           url: `${origin}/`,
           logo: iconUrl,
           image: iconUrl,
-          sameAs: teamMembers.map((member) => member.linkedin),
+          sameAs,
           contactPoint: {
             '@type': 'ContactPoint',
             contactType: 'sales',

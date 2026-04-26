@@ -1962,10 +1962,31 @@
 .site-footer {
   position: relative;
   z-index: var(--z-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
   padding: 1.5rem 0 2rem;
   text-align: center;
   color: var(--text);
   font-size: 0.92rem;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer-instagram {
+  color: var(--text);
+  font-weight: 600;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+  transition: color 0.2s ease;
+}
+
+.site-footer-instagram:hover,
+.site-footer-instagram:focus-visible {
+  color: var(--accent);
 }
 
 /* =============================================

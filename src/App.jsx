@@ -5,7 +5,7 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import { SEOHead } from './components/SEOHead'
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
-import { WHATSAPP_NUMBER } from './data/constants'
+import { INSTAGRAM_URL, WHATSAPP_NUMBER } from './data/constants'
 
 const Services = lazy(() =>
   import('./components/Services').then((module) => ({ default: module.Services }))
@@ -191,6 +191,15 @@ function App() {
       )}
 
       <footer className="site-footer">
+        <a
+          className="site-footer-instagram"
+          href={INSTAGRAM_URL}
+          target="_blank"
+          rel="me noreferrer"
+          aria-label="Instagram de Variable Web"
+        >
+          Instagram: @variable_web
+        </a>
         <p>&copy; 2026 Variable Web. Todos los derechos reservados.</p>
       </footer>
     </div>
